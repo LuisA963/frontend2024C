@@ -1,92 +1,155 @@
+import { useState } from 'react'
 import './App.css'
-
+const numericButtonsClasses = 'btn btn-outline-info w-100'
+const operatorButtonsClasses = 'btn btn-outline-warning w-100'
+const specialButtonsClasses = 'btn btn-outline-danger'
 function App() {
-
+  const [display, setDisplay] = useState({value: '0', hasPoint: false,})
+ const updateDisplay = (value) =>{
+  if (value === '.'){
+    if(display.hasPoint){
+      return 
+    }
+    setDisplay({
+      ...display,
+      value: display.value + value,
+      hasPoint: true,
+    })
+    return 
+  }
+  if(display.value === '0'){
+    setDisplay({
+      ...display,
+      value: value,
+    })
+    retrun
+  }
+  setDisplay({
+    ...display,
+    value: display.value + value,
+    
+  })
+   
+ }
+const clearDisplay =() =>{
+  setDisplay({
+  ...display,
+  value: '0',
+  hasPoint: false,
+})
+}
   return (
- <div>
-  <h1>Calculator</h1>
-  <hr/>
+    <div>
+      <h1>Calculator</h1>
+      <hr/>
   <table className='center'>
     <tbody>
       <tr>
-        <td colSpan={4}>
-          11
+        <td className="text-end" colSpan={4}>
+        <h2>{display.value}</h2>
         </td>
         </tr>
             <tr>
         <td>
-          21
+        <button
+            className={operatorButtonsClasses} type='button'
+             onClick={clearDisplay}>C</button>
         </td>
         <td>
-          22
+        <button
+            className={operatorButtonsClasses} type='button'>{"<"}</button>
         </td>
         <td>
-          23
+        <button
+            className={operatorButtonsClasses} type='button'>%</button>
         </td>
         <td>
-          24
+        <button
+            className={operatorButtonsClasses} type='button'>/</button>
           </td>
             </tr>
             <tr>
         <td>
-          31
+        <button
+            className={numericButtonsClasses} type='button'
+            onClick={() => updateDisplay('7')}>7</button>
         </td>
         <td>
-          32
+        <button
+            className={numericButtonsClasses} type='button'
+            onClick={() => updateDisplay('8')}>8</button>
         </td>
         <td>
-          33
+        <button
+            className={numericButtonsClasses} type='button'
+             onClick={() => updateDisplay('9')}>9</button>
         </td>
         <td>
-          34
+        <button
+            className={operatorButtonsClasses} type='button'>x</button>
           </td>
             </tr>
             <tr>
         <td>
-          41
+        <button
+            className={numericButtonsClasses} type='button'
+            onClick={() => updateDisplay('4')}>4</button>
         </td>
         <td>
-          42
+        <button
+            className={numericButtonsClasses} type='button'
+             onClick={() => updateDisplay('5')}>5</button>
         </td>
         <td>
-          43
+        <button
+            className={numericButtonsClasses} type='button'
+             onClick={() => updateDisplay('6')}>6</button>
         </td>
         <td>
-          44
+        <button
+            className={operatorButtonsClasses} type='button'>-</button>
           </td>
             </tr>
             <tr>
         <td>
-          51
+        <button
+            className={numericButtonsClasses} type='button'
+             onClick={() => updateDisplay('1')}>1</button>
         </td>
         <td>
-          52
+        <button
+            className={numericButtonsClasses} type='button'
+            onClick={() => updateDisplay('2')}>2</button>
         </td>
         <td>
-          53
+        <button
+            className={numericButtonsClasses} type='button'
+            onClick={() => updateDisplay('3')}>3</button>
         </td>
         <td>
-          54
-          </td>
+        <button
+            className={operatorButtonsClasses} type='button'>+</button>
+        </td>
           </tr>
         <tr>
-        <td>
-          61
+        <td colSpan={2}>
+          <button
+            className={numericButtonsClasses} type='button'
+               onClick={() => updateDisplay('0')}>0</button>
         </td>
         <td>
-          62
+        <button
+            className={numericButtonsClasses} type='button'
+            onClick={() => updateDisplay('.')}>.</button>
         </td>
         <td>
-          63
+        <button
+            className={specialButtonsClasses} type='button'>=</button>
         </td>
-        <td>
-          64
-          </td>
             </tr>
     </tbody>
   </table>
- </div>
+    </div>
   )
 }
-
 export default App
