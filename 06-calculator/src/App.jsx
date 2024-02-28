@@ -4,7 +4,7 @@ const numericButtonsClasses = 'btn btn-outline-info w-100'
 const operatorButtonsClasses = 'btn btn-outline-warning w-100'
 const specialButtonsClasses = 'btn btn-outline-danger'
 function App() {
-  const [display, setDisplay] = useState({value: '0', hasPoint: false,})
+  const [display, setDisplay] = useState({value: '0', hasPoint: false, operator: '', previousValue :'0',})
  const updateDisplay = (value) =>{
   if (value === '.'){
     if(display.hasPoint){
@@ -31,12 +31,66 @@ function App() {
   })
    
  }
+
+ const deleteLastCharacter = () => {
+  setDisplay({
+    ...display,
+    value: display.value.slice(0, -1),
+    hasPoint: (display.value.slice(-1) === '.')? false : display.hasPoint
+  })
+
+  if(display.value.length === 1){
+    setDisplay({
+      ...display,
+      value: '0'
+    })
+  }
+ }
 const clearDisplay =() =>{
   setDisplay({
   ...display,
   value: '0',
   hasPoint: false,
 })
+}
+const setOperator = (operator) =>{
+  setDisplay({
+    ...display,
+    operator,
+    previousValue: display.value,
+    value: '0',
+    hasPoint: false,
+  })
+
+}
+
+const calculate = () =>{
+  if(display.operator === ''){
+    return
+  }
+
+ // let result = 0
+ // if(display.operator === '%'){
+   // result = eval(display.previousValue + '/100*' + display.value)
+ // }else{
+   // eval(display.previousValue +   display.operator + display.value)
+  //}
+
+  
+
+  let result = (display.operator === '%')?
+  eval(display.previousValue + '/100*' + display.value):
+  eval(display.previousValue +   display.operator + display.value)
+  
+
+  setDisplay({
+    ...display,
+    operator: '',
+    hasPoint: false,
+    previousValue: '0',
+    value: result + '',
+   
+  })
 }
   return (
     <div>
@@ -52,20 +106,20 @@ const clearDisplay =() =>{
             <tr>
         <td>
         <button
-            className={operatorButtonsClasses} type='button'
+            className={specialButtonsClasses} type='button'
              onClick={clearDisplay}>C</button>
         </td>
         <td>
         <button
-            className={operatorButtonsClasses} type='button'>{"<"}</button>
+            className={specialButtonsClasses} type='button' onClick={deleteLastCharacter}>{"<"}</button>
         </td>
         <td>
         <button
-            className={operatorButtonsClasses} type='button'>%</button>
+            className={operatorButtonsClasses} type='button' onClick={() => setOperator('%')}>%</button>
         </td>
         <td>
         <button
-            className={operatorButtonsClasses} type='button'>/</button>
+            className={operatorButtonsClasses} type='button'onClick={() => setOperator('/')}>/</button>
           </td>
             </tr>
             <tr>
@@ -86,7 +140,7 @@ const clearDisplay =() =>{
         </td>
         <td>
         <button
-            className={operatorButtonsClasses} type='button'>x</button>
+            className={operatorButtonsClasses} type='button'onClick={() => setOperator('*')}>x</button>
           </td>
             </tr>
             <tr>
@@ -107,7 +161,7 @@ const clearDisplay =() =>{
         </td>
         <td>
         <button
-            className={operatorButtonsClasses} type='button'>-</button>
+            className={operatorButtonsClasses} type='button' onClick={() => setOperator('-')}>-</button>
           </td>
             </tr>
             <tr>
@@ -128,7 +182,7 @@ const clearDisplay =() =>{
         </td>
         <td>
         <button
-            className={operatorButtonsClasses} type='button'>+</button>
+            className={operatorButtonsClasses} type='button'onClick={() => setOperator('+')}>+</button>
         </td>
           </tr>
         <tr>
@@ -144,7 +198,7 @@ const clearDisplay =() =>{
         </td>
         <td>
         <button
-            className={specialButtonsClasses} type='button'>=</button>
+            className={specialButtonsClasses} type='button' onClick={calculate}>=</button>
         </td>
             </tr>
     </tbody>
