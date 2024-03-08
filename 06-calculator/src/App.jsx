@@ -12,7 +12,7 @@ function App() {
     }
     setDisplay({
       ...display,
-      value: display.value + value,
+      value: Limit(display.value + value),
       hasPoint: true,
     })
     return 
@@ -26,7 +26,7 @@ function App() {
   }
   setDisplay({
     ...display,
-    value: display.value + value,
+    value: Limit(display.value + value),
     
   })
    
@@ -88,9 +88,14 @@ const calculate = () =>{
     operator: '',
     hasPoint: false,
     previousValue: '0',
-    value: result + '',
+    value: Limit( result + ''),
    
   })
+}
+
+const Limit = (string = '', length = 10) =>{
+  return string.slice(0, length)
+
 }
   return (
     <div>
