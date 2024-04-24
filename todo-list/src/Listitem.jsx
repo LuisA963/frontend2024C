@@ -18,7 +18,6 @@ const ListItem = ({task}) =>{
             {task.location} 
           </div> 
           <div className="col"> 
-            <input type="checkbox"/> 
           </div> 
         </div> 
         </> 
